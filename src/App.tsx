@@ -5,8 +5,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import './app.css';
+import { CircleLoader, ClipLoader } from 'react-spinners';
 
 function App(): JSX.Element {
+  const [response, SetResponse] = useState<ResponseData>();
+  const [loading, setLoading] = useState<boolean>(false);
+
   const formSchema = yup.object().shape({
     amount: yup
       .number()
@@ -19,17 +23,15 @@ function App(): JSX.Element {
       .positive()
       .integer()
       .required('Insira a quantia.')
-      .min(12, 'Installments deve ser maior ou igual a 1000'),
+      .max(12, 'Installments deve ser menor ou igual a 12'),
     mdr: yup
       .number()
       .positive()
       .integer()
       .required('Insira a quantia.')
-      .min(100, 'Mdr deve ser maior ou igual a 100'),
+      .max(100, 'Mdr deve ser menor ou igual a 100'),
     days: yup.array(),
   });
-
-  const [response, SetResponse] = useState<ResponseData>();
 
   const {
     register,
@@ -40,9 +42,14 @@ function App(): JSX.Element {
   });
 
   const onSubmitFunction = async (data: RequestData): Promise<void> => {
+    setLoading(true);
     await axios
-      .post('https://frontend-challenge-7bu3nxh76a-uc.a.run.app/', data)
+      .post(
+        'https://frontend-challenge-7bu3nxh76a-uc.a.run.app/?delay=3000',
+        data,
+      )
       .then((response) => {
+        setLoading(false);
         SetResponse(response.data);
       })
       .catch((error) => {
@@ -51,23 +58,56 @@ function App(): JSX.Element {
     console.log(response);
   };
 
-  /*  const dataSubmit: RequestData = {
-    amount: 15000// >1000,
-    installments: 3// <12,
-    mdr: 4// <100,
-    days: [30, 60, 90],
-  }; */
-
   return (
     <div className="container">
       <form className="form" onSubmit={handleSubmit(onSubmitFunction)}>
-        <input placeholder="amount" {...register('amount')}></input>
-        {errors.amount && errors.amount?.message}
-        <input placeholder="installments" {...register('installments')}></input>
-        {errors.installments && errors.installments?.message}
-        <input placeholder="mdr" {...register('mdr')}></input>
-        {errors.mdr && errors.mdr?.message}
-        <button type="submit">Calcular</button>
+        <div className="request-container">
+          <div className="label-and-input-box">
+            <label className="request-label">AMOUNT</label>
+            <input placeholder="amount" {...register('amount')}></input>
+            {errors.amount && errors.amount?.message}
+          </div>
+          <div className="label-and-input-box">
+            <label className="request-label">INSTALLMENTS</label>
+            <input
+              placeholder="installments"
+              {...register('installments')}
+            ></input>
+            {errors.installments && errors.installments?.message}
+          </div>
+          <div className="label-and-input-box">
+            <label className="request-label">MDR</label>
+            <input placeholder="mdr" {...register('mdr')}></input>
+            {errors.mdr && errors.mdr?.message}
+          </div>
+          <button type="submit">Calcular</button>
+        </div>
+        <div className="response-container">
+          {loading ? (
+            <ClipLoader className="loading" color="#ea1d5d" />
+          ) : (
+            <>
+              <label className="response-label">Você receberá:</label>
+              <div className="response-labels-container">
+                <label className="mais-um-labelkkkk">
+                  1 dia: <span className="response-span">{response?.[1]}</span>
+                </label>
+                <label className="mais-um-labelkkkk">
+                  15 dias:{' '}
+                  <span className="response-span">{response?.[15]}</span>
+                </label>
+                <label className="mais-um-labelkkkk">
+                  30 dias:{' '}
+                  <span className="response-span">{response?.[30]}</span>
+                </label>
+                <label className="mais-um-labelkkkk">
+                  90 dias:{' '}
+                  <span className="response-span">{response?.[90]}</span>
+                </label>
+              </div>
+            </>
+          )}
+        </div>
       </form>
     </div>
   );
