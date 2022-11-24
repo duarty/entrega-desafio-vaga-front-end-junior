@@ -1,3 +1,115 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+
+}
+
 body {
     background-image: url('./images/background.png'), url('./images/grad.jpg');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form {
+    display: flex;
+    flex-direction:row;
+    width: 100%;
+
+}
+.request-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+
+}
+.label-and-input-box{
+    margin-top: 1em;
+}
+
+.request-label{
+    font-family: 2em 'Teko', sans-serif;
+    color:  #91a3ad;
+}
+.request-label::placeholder{
+    color:  #ffffff;
+}
+button {
+    margin-top: 2em;
+    font-family: 2em 'Teko', sans-serif;
+    background-color: #ea1d5d;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    letter-spacing: 2px;
+    padding: 13px 27px;
+    text-transform: uppercase;
+    border-radius: 0.05em;
+    white-space: nowrap;
+}
+
+button:hover{
+    box-shadow: .2s ease;
+    background-color: .2s ease;
+    transition-duration: 0.2s, 0.2s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+
+}
+input {
+    background: linear-gradient(90deg,#0a0a0a,#262a2d);
+    border: 1px solid #ea1d5d;
+    border-radius: 0.1em;
+    font-family: 1em 'Teko', sans-serif;
+    height: 3rem;
+    letter-spacing: 1px;
+    max-width: 100%;
+    color: white;
+    outline: none;
+    padding: 0 1em;
+    width: 100%;
+}
+
+.response-container{
+    width: 200px;
+    font-family: 1em 'Teko', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #91a3ad;
+    background-color: rgba(56, 56, 56, 0.4);
+    border-radius: 0.2em;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+.response-labels-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 1px;
+}
+.response-label{
+    margin-top: 1em;
+}
+
+.response-span{
+    color: #ea1d5d;
+}
+
+.loading {
+    margin-top: 7em;
+}
+.mais-um-labelkkkk{
+    margin-top: 1em;
 }
